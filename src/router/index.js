@@ -18,7 +18,7 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/subir-archivos',
+      path: '/subir-archivos-nuevos-sanpmb',
       name: 'subirArchivos',
       component: () => import('@/views/SubirArchivosView.vue')
     },
@@ -26,6 +26,11 @@ const router = createRouter({
       path: '/contacto',
       name: 'contacto',
       component: () => import('@/views/ContactoView.vue')
+    },
+    {
+      path: '/eliminar-prendas',
+      name: 'eliminar',
+      component: () => import('@/views/EliminarPrendaView.vue')
     },
 
   ]

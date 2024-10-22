@@ -8,6 +8,7 @@ const nombrePrenda = ref('')
 const precioPrenda = ref('')
 const tallaPrenda = ref('')
 const imagenPrenda = ref(null)
+const tipoPrenda = ref('')
 const url = ref('')
 
 const uploadImage = async (event) => {
@@ -50,13 +51,20 @@ const handleSubmit = async (event) => {
             nombre: nombrePrenda.value,
             precio: precioPrenda.value,
             talla: tallaPrenda.value,
+            tipoPrenda: tipoPrenda.value,
             urlImg: imageUrl,
         })
         //se limpian los campos
         nombrePrenda.value = '';
         precioPrenda.value = '';
         tallaPrenda.value = '';
-        imagenPrenda.value = null;
+
+        const fileInput = document.querySelector('#imagen-prenda')
+        if (fileInput) {
+            fileInput.value = ''
+        }
+
+        tipoPrenda.value = ''
         alert('Producto guardado con éxito');
 
     } catch (error) {
@@ -84,6 +92,10 @@ const handleSubmit = async (event) => {
             <input type="text" class="form-control" id="talla-prenda" v-model="tallaPrenda">
         </div>
         <div class="mb-3">
+            <label class="form-label">Tipo Prenda</label>
+            <input type="text" class="form-control" id="tipo-prenda" v-model="tipoPrenda">
+        </div>
+        <div class="mb-3">
             <label class="form-label">Imagen de la prenda</label>
             <input type="file" @change="onFileChange" class="form-control" id="imagen-prenda" />
         </div>
@@ -92,10 +104,6 @@ const handleSubmit = async (event) => {
     <div>
     </div>
 
-    <!-- <div v-if="url">
-        <p>Imagen Subida Correctamente</p>
-        <img :src="url" alt="imagen subida">
-    </div> -->
 
 </template>
 
