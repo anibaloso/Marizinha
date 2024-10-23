@@ -48,10 +48,10 @@ const handleSubmit = async (event) => {
         //guardando los datos en firestore
         const prendasRef = collection($db, 'prendas')
         await addDoc(prendasRef, {
-            nombre: nombrePrenda.value,
-            precio: precioPrenda.value,
-            talla: tallaPrenda.value,
-            tipoPrenda: tipoPrenda.value,
+            nombre: nombrePrenda.value.toLowerCase(),
+            precio: precioPrenda.value.toLowerCase(),
+            talla: tallaPrenda.value.toLowerCase(),
+            tipoPrenda: tipoPrenda.value.toLowerCase(),
             urlImg: imageUrl,
         })
         //se limpian los campos
