@@ -34,7 +34,6 @@ const props = defineProps({
     width: 100%;
     padding: 32px 16px 120px;
     background-color: rgba(0, 0, 0, 0.6);
-    /* Fondo semitransparente */
     display: grid;
     place-items: center;
     backdrop-filter: blur(9px);
@@ -42,7 +41,6 @@ const props = defineProps({
 }
 
 .pop-up-inner {
-    /* background-color: #52a07e; */
     z-index: 20;
     display: flex;
     flex-direction: column;
