@@ -1,15 +1,16 @@
 <script setup>
 import { $db } from '@/firebaseApp';
-import { filtroTipoPrenda } from '@/services/services';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { computed, onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import PopUp from './PopUp.vue';
 
 
 const prendas = ref([])
 const tipoDePrenda = ref([])
 const filtro = ref('')
 let tipos = ref([])
-
+let popUp = ref(false)
+let imagenSeleccionada = ref('')
 
 const obtenerPrendas = () => {
     try {
@@ -43,35 +44,23 @@ const filtrarPrendasPorTipo = (tipoPrenda) => {
     }
 }
 
-
-
-// //computed para obtener tipos unicos de prendas
-// const tiposUnicos = computed(() => {
-//     return [...new Set(prendas.value.map(prenda => prenda.tipoPrenda.toLowerCase()))]
-// })
-
-
-// const algunasPrendas = async (tipoPrenda) => {
-//     try {
-//         if (tipoPrenda) {  // Solo filtrar si tipoPrenda tiene un valor
-//             prendas.value = await filtroTipoPrenda(tipoPrenda);
-//         } else {
-//             // Si no hay filtro, cargar todas las prendas de nuevo
-//             const prendasRef = collection($db, 'prendas');
-//             onSnapshot(prendasRef, (snapshot) => {
-//                 tipos.value = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-//             });
-//         }
-//     } catch (error) {
-//         console.error('falla al filtrar prenda', error)
-//     }
-// }
-
-
 watch(filtro, (nuevoFiltro) => {
     filtrarPrendasPorTipo(nuevoFiltro);
 });
 
+function currencyFormatter({ value, currency }) {
+    const formatter = new Intl.NumberFormat('es-CL', {
+        style: 'currency',
+        minimumFractionDigits: 0,
+        currency
+    })
+    return formatter.format(value)
+}
+
+function modal(imagenUrl) {
+    imagenSeleccionada.value = imagenUrl
+    popUp.value = true
+}
 
 onMounted(() => {
     obtenerPrendas()
@@ -86,7 +75,7 @@ onMounted(() => {
         <div class="row" id="select-prendas">
 
             <select name="Tipo-prenda" id="prendas" v-model="filtro">
-                <option value="">Seleccione tipo de prenda</option>
+                <option value="">Todas las prendas</option>
                 <option v-for="tipo in tipos" :key="tipo" :value="tipo">
                     {{ tipo }}
                 </option>
@@ -96,12 +85,15 @@ onMounted(() => {
                 <div class="col-12 col-md-6 col-lg-4" v-for="prenda in prendas" :key="prenda.id">
                     <div class="card mt-3" style="width: 18rem;">
                         <img :src="prenda.urlImg" class="card-img-top" alt="Imagen de la prenda"
-                            @click="abrirModal(prenda.urlImg)">
+                            @click="modal(prenda.urlImg)">
                         <div class="card-body">
                             <h5 class="card-title">{{ prenda.nombre }}</h5>
                             <p class="card-text">Talla {{ prenda.talla }}</p>
-                            <p class="card-text">Precio {{ prenda.precio }}</p>
-                            <button href="#" class="btn btn-primary ">Comprar</button>
+                            <p class="card-text">Precio {{ currencyFormatter({
+                                value: prenda.precio, currency: 'CLP',
+                            }) }}
+                                CLP </p>
+                            <button class="btn btn-primary">Comprar</button>
                         </div>
                     </div>
                 </div>
@@ -110,15 +102,7 @@ onMounted(() => {
     </div>
 
     <!-- ----------------------------------- modal ----------------------------------- -->
-    <!-- 
-    <div v-if="mostrarModal" class="modal" @click="cerrarModal">
-        <div class="modal-content" @click.stop>
-            <span class="close" @click="cerrarModal">&times;</span>
-            <img :src="imagenSeleccionada" alt="Imagen grande">
-        </div>
-
-    </div> -->
-
+    <PopUp v-show="popUp" :imagen-url="imagenSeleccionada" @close="popUp = false" />
     <!-- -----------------------------------   /modal  ----------------------------------- -->
 
 </template>

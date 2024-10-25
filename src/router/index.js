@@ -28,7 +28,7 @@ const router = createRouter({
       component: () => import('@/views/ContactoView.vue')
     },
     {
-      path: '/eliminar-prendas',
+      path: '/eliminar-prendas-eppmb',
       name: 'eliminar',
       component: () => import('@/views/EliminarPrendaView.vue')
     },

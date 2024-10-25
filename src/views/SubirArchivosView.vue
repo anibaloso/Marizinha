@@ -11,6 +11,7 @@ const imagenPrenda = ref(null)
 const tipoPrenda = ref('')
 const url = ref('')
 
+
 const uploadImage = async (event) => {
     const file = event.target.files[0];
     const storageReference = storageRef(storage, `images/${file.name}`); // Ruta de almacenamiento
@@ -76,28 +77,28 @@ const handleSubmit = async (event) => {
 </script>
 
 <template>
-    <h1>Pagina para subir archivos</h1>
+    <h1 class="text-center"><strong> Subir archivos </strong></h1>
 
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleSubmit" class="m-5 ">
         <div class="mb-3">
             <label class="form-label">Nombre Prenda</label>
-            <input type="text" class="form-control" id="nombre-prenda" v-model="nombrePrenda">
+            <input type="text" class="form-control w-50" id="nombre-prenda" v-model="nombrePrenda">
         </div>
         <div class="mb-3">
             <label class="form-label">Precio Prenda</label>
-            <input type="text" class="form-control" id="precio-prenda" v-model="precioPrenda">
+            <input type="text" class="form-control w-50" id="precio-prenda" v-model="precioPrenda">
         </div>
         <div class="mb-3">
             <label class="form-label">Talla Prenda</label>
-            <input type="text" class="form-control" id="talla-prenda" v-model="tallaPrenda">
+            <input type="text" class="form-control w-50" id="talla-prenda" v-model="tallaPrenda">
         </div>
         <div class="mb-3">
             <label class="form-label">Tipo Prenda</label>
-            <input type="text" class="form-control" id="tipo-prenda" v-model="tipoPrenda">
+            <input type="text" class="form-control w-50" id="tipo-prenda " v-model="tipoPrenda">
         </div>
         <div class="mb-3">
             <label class="form-label">Imagen de la prenda</label>
-            <input type="file" @change="onFileChange" class="form-control" id="imagen-prenda" />
+            <input type="file" @change="onFileChange" class="form-control w-50" id="imagen-prenda" />
         </div>
         <button type="submit" class="btn btn-primary">Guardar Producto</button>
     </form>
