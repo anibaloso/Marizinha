@@ -6,26 +6,25 @@ const props = defineProps({
     imagenUrl: {
         type: String,
         required: true,
+    },
+    nombreUrl: {
+        type: String,
+        required: true,
     }
 })
 </script>
 
 <template>
     <div class="pop-up" @click="$emit('close')">
-        <div class="pop-up-inner">
-
-            <img :src="imagenUrl" alt="Imagen de la prenda" class="imagen-prenda">
+        <div class="pop-up-inner ">
+            <h1>{{ nombreUrl }}</h1>
+            <img :src="imagenUrl" alt="Imagen de la prenda" class="imagen-prenda  ">
 
         </div>
     </div>
 </template>
 
 <style scoped>
-* {
-    background-color: #52a07e;
-
-}
-
 .pop-up {
     position: fixed;
     top: 0;
@@ -39,32 +38,22 @@ const props = defineProps({
     display: grid;
     place-items: center;
     backdrop-filter: blur(9px);
+
 }
 
 .pop-up-inner {
-    background-color: #52a07e;
+    /* background-color: #52a07e; */
     z-index: 20;
+    display: flex;
+    flex-direction: column;
+    max-width: 50vh;
+    min-width: 50vh;
+
+
 }
 
 .imagen-prenda {
     opacity: 1;
-
-}
-
-img {}
-
-
-.pop-up-close {
-    cursor: pointer;
-    color: white;
-    font-size: 3rem;
-    display: flex;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.btn-danger {
-    background-color: red;
+    justify-content: center;
 }
 </style>

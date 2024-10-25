@@ -11,6 +11,7 @@ const filtro = ref('')
 let tipos = ref([])
 let popUp = ref(false)
 let imagenSeleccionada = ref('')
+let nombreSeleccionada = ref('')
 
 const obtenerPrendas = () => {
     try {
@@ -57,8 +58,9 @@ function currencyFormatter({ value, currency }) {
     return formatter.format(value)
 }
 
-function modal(imagenUrl) {
+function modal(imagenUrl, nombreUrl) {
     imagenSeleccionada.value = imagenUrl
+    nombreSeleccionada.value = nombreUrl
     popUp.value = true
 }
 
@@ -85,7 +87,7 @@ onMounted(() => {
                 <div class="col-12 col-md-6 col-lg-4" v-for="prenda in prendas" :key="prenda.id">
                     <div class="card mt-3" style="width: 18rem;">
                         <img :src="prenda.urlImg" class="card-img-top" alt="Imagen de la prenda"
-                            @click="modal(prenda.urlImg)">
+                            @click="modal(prenda.urlImg, prenda.nombre)">
                         <div class="card-body">
                             <h5 class="card-title">{{ prenda.nombre }}</h5>
                             <p class="card-text">Talla {{ prenda.talla }}</p>
@@ -102,7 +104,7 @@ onMounted(() => {
     </div>
 
     <!-- ----------------------------------- modal ----------------------------------- -->
-    <PopUp v-show="popUp" :imagen-url="imagenSeleccionada" @close="popUp = false" />
+    <PopUp v-show="popUp" :nombre-url="nombreSeleccionada" :imagen-url="imagenSeleccionada" @close="popUp = false" />
     <!-- -----------------------------------   /modal  ----------------------------------- -->
 
 </template>
@@ -112,6 +114,12 @@ onMounted(() => {
     width: 100%;
     height: 300px;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-img-top:hover {
+    transform: scale(1.1);
+
 }
 
 .card-body {

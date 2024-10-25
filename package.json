@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@remix-run/dev": "^2.13.1",
     "bootstrap": "^5.3.3",
     "filepond": "^4.31.4",
     "firebase": "^10.14.1",
