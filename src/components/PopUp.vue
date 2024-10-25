@@ -48,8 +48,6 @@ const props = defineProps({
     flex-direction: column;
     max-width: 50vh;
     min-width: 50vh;
-
-
 }
 
 .imagen-prenda {
